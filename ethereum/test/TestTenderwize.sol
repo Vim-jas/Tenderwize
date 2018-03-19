@@ -16,8 +16,8 @@ contract TestTenderwize {
 		bytes memory hashTender = "hashOfTheTender";
 		bytes memory hash 		= "somerandomhash";
 		tender.mapClient(hashTender, GSTID, hash);
-
-		bool correctness = tender.mapClient(hashTender, GSTID, hash);
+		bytes memory hashTender1 = "ashOfTheTender";
+		bool correctness = tender.mapClient(hashTender1, GSTID, hash);
 		bool actual = true;
 
 		Assert.equal(correctness, actual, "mapClient didn't work! FUCCCKKKK NO!");
@@ -30,10 +30,10 @@ contract TestTenderwize {
 
 		bytes memory GSTID 		= "GST1234121HJDHGV3";
 		bytes memory hashTender = "hashOfTheTender";
-		bytes memory givenHash 	= "somerandomhash";
+		bytes memory givenHash 	= "omerandomhash";
 		
 		bool correctness = tender.matchFileHash(hashTender, GSTID, givenHash);
-		bool actual = true;
+		bool actual = false;
 
 		Assert.equal(correctness, actual, "matchFileHash didn't work! FUCCCKKKK NO!");
 	}

@@ -6,8 +6,8 @@ contract Tenderwize {
     {
     	bytes hashOfTender;
     	uint count;
-		bytes [100] GSTIDArr;
-		bytes [100] hashArr;
+		bytes [50] GSTIDArr;
+		bytes [50] hashArr;
     }
 
 	uint cnt;
@@ -31,6 +31,7 @@ contract Tenderwize {
 		
 		arrTender[cnt].GSTIDArr[c] = GSTID;
 		arrTender[cnt].hashArr[c] = hash;
+		arrTender[cnt].hashOfTender = hashTender;
 		arrTender[cnt].count += 1;
 		
 		if (c == 0) {
