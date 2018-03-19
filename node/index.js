@@ -67,15 +67,69 @@ router.get('/', function(req, res) {
 	return res.end();
 });
 
+router.get('/new_tender', function(req, res) {
+	var tender = {
+		id: null,
+		title: null,
+		desc: null,
+		link: null,
+		addr: null,
+		date: null,
+		dead1: null,
+		dead2: null,
+	}
+
+	tender['id'] = req.query.title;
+	tender['title'] = req.query.title;
+	tender['desc'] = req.query.desc;
+	tender['link'] = req.query.link;
+	tender['dead1'] = req.query.dead1;
+	tender['dead2'] = req.query.dead2;
+	var dt = new Date();
+	tender['date'] = dt.toDateString();
+
+	tender_complete[req.query.org] = tender;
+});
+
+router.get('/get_tender', function(req, res){
+	var id = req.query.id;
+	var org = req.query.org;
+	
+	if(org) {
+		for (var i = tender_complete[org].length - 1; i >= 0; i--) {
+			if (tender_complete[org][i]['id'] == id)
+				return res.json(tender_complete[org][i]);
+		}
+	}
+	else {
+		var keys = Object.keys(tender_complete);
+		for (var i = keys.length - 1; i >= 0; i--) {
+			
+			for (var j = tender_complete[keys[i]].length - 1; j >= 0; j--) {
+				if (tender_complete[keys[i]][j]['id'] == id)
+					return res.json(tender_complete[org][j]);
+			}
+		}
+	}
+	return res.end('false');
+});
+
 router.get('/org/tenders', function(req, res) {
 	const org_id = req.query.org_id;
 	res.json(tender_complete[org_id]);
 });
 
 router.post('/org/upload/tender', upload_tender.single('filetoupload'), function(req, res) {
-	console.log(req.file);
+	var path = req.file.path;
+	var name = req.file.filename;
+	res.json({'path': path, 'name': name});
 });
 
+router.post('/org/upload/user', upload_user.single('filetoupload'), function(req, res) {
+	var path = req.file.path;
+	var name = req.file.filename;
+	res.json({'path': path, 'name': name});
+});
 
 
 
