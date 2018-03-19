@@ -1,0 +1,25 @@
+{
+  "name": "tenderwize",
+  "version": "1.0.0",
+  "description": "tenderwize",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vim-jas/Tenderwize.git"
+  },
+  "keywords": [
+    "blockchain",
+    "react",
+    "node",
+    "corruption"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vim-jas/Tenderwize/issues"
+  },
+  "homepage": "https://github.com/Vim-jas/Tenderwize#readme"
+}
