@@ -4,6 +4,13 @@ App = {
   web3Provider: null,
   contracts: {},
 
+  	//Need to write this one :P
+  	init: function{
+
+  	},
+
+
+  	//Gives a web3 instance 
 	initWeb3: function() {
     	// Is there an injected web3 instance?
     	if (typeof web3 !== 'undefined') {
@@ -13,15 +20,14 @@ App = {
 		App.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
 		}
 		web3 = new Web3(App.web3Provider);
-
 		return App.initContract();
 	},
 
-
+	//Initializes the contract
 	initContract: function() {
-		$.getJSON('Tenderize.json', function(data) {
+		$.getJSON('Tenderwize.json', function(data) {
     	// Get the necessary contract artifact file and instantiate it with truffle-contract
-    	var TenderizeArtifact = data;
+    	var TenderwizeArtifact = data;
     	App.contracts.Tenderwize = TruffleContract(TenderwizeArtifact);
 
     	// Set the provider for our contract
@@ -32,9 +38,21 @@ App = {
 
 		//need to add a call to desired func 
 		});
-
-   		return App.bindEvents();
+		return App.bindEvents();
  	},
+
+	//Binds the event of click of the button with appropriate function.
+	bindEvents: function() {
+		$(document).on('click', '.btn-adopt', App.submitHashOfFile);
+	},
+
+	//Submits the hash of the tender application in the smart contract
+	submitHashOfFile: function{
+
+
+
+	},
+
 
 };
 
