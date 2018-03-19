@@ -12,21 +12,21 @@ contract TestTenderwize {
 	//Checks the function mapClient
 	function testMapClient() public {
 
-		bytes hash = "somerandomhash";
-		bytes GSTID = "GST1234121HJDHGV3"; //submit GSTID here
-		
+		bytes memory hash = "somerandomhash";
+		bytes memory GSTID = "GST1234121HJDHGV3"; //submit GSTID here
+		tender.mapClient(GSTID, hash);
 		bool correctness = tender.mapClient(GSTID, hash);
 		
-		bool actual = true;
+		bool actual = false;
 
 		Assert.equal(correctness, actual, "mapClient didn't work! FUCCCKKKK NO!");
 	}
 
 	function testMatchFileHash() public {
 
-		bytes GSTID = "GST1234121HJDHGV3";
-		bytes hash = "somerandomhash";
-		bytes givenHash = "somerandomhash";
+		bytes memory GSTID = "GST1234121HJDHGV3";
+		bytes memory hash = "somerandomhash";
+		bytes memory givenHash = "somerandomhash";
 		
 		bool correctness = tender.matchFileHash(GSTID, hash, givenHash);
 		
@@ -34,13 +34,4 @@ contract TestTenderwize {
 
 		Assert.equal(correctness, actual, "matchFileHash didn't work! FUCCCKKKK NO!");
 	}
-}
-
-
-
-
-
-
-
-
 }
