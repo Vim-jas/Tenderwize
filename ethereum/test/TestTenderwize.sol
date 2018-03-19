@@ -6,32 +6,34 @@ import "../contracts/Tenderwize.sol";
 
 contract TestTenderwize {
 
-	Tenderwize tender = Adoption(DeployedAddresses.Adoption());
+	Tenderwize tender = Tenderwize(DeployedAddresses.Tenderwize());
 
 
 	//Checks the function mapClient
 	function testMapClient() public {
 
 		bytes hash = "somerandomhash";
-		bytes GSTID = ""; //submit GSTID here
+		bytes GSTID = "GST1234121HJDHGV3"; //submit GSTID here
+		
 		bool correctness = tender.mapClient(GSTID, hash);
-		bool actual = 1;
+		
+		bool actual = true;
 
-		Assert.equal(correctness, actual, "mapClient works fine! Hell Yes!");
+		Assert.equal(correctness, actual, "mapClient didn't work! FUCCCKKKK NO!");
 	}
 
 	function testMatchFileHash() public {
 
-		bytes GSTID = "";
-		bytes hash = "";
-		bytes givenHash = "";
+		bytes GSTID = "GST1234121HJDHGV3";
+		bytes hash = "somerandomhash";
+		bytes givenHash = "somerandomhash";
+		
 		bool correctness = tender.matchFileHash(GSTID, hash, givenHash);
-		bool actual = 1;
+		
+		bool actual = true;
 
-		Assert.equal(correctness, actual, "matchFileHash works fine! Hell Yes!");
+		Assert.equal(correctness, actual, "matchFileHash didn't work! FUCCCKKKK NO!");
 	}
-
-
 }
 
 
