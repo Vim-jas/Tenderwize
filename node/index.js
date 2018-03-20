@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const multer  = require('multer');
+const SHA3 = require('sha3');
 const port = process.env.PORT || 3000;
 
 var tender_complete = {
@@ -116,6 +117,7 @@ router.post('/new_tender', function(req, res) {
 		title: req.body.title,
 		desc: req.body.desc,
 		link: req.body.link,
+		link_hash: req.body.link_hash;
 		addr: null,
 		date: dt.toDateString(),
 		dead1: req.body.dead1,
@@ -160,9 +162,10 @@ router.get('/org/tenders', function(req, res) {
 });
 
 router.post('/org/upload/tender', upload_tender.single('filetoupload'), function(req, res) {
+	var hash = req.body.hash_file;
 	var path = req.file.path;
 	var name = req.file.filename;
-	res.json({'path': path, 'name': name});
+	res.json({'path': path, 'name': name, 'hash': hash});
 });
 
 router.post('/org/upload/user', upload_user.single('filetoupload'), function(req, res) {
