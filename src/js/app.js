@@ -4,25 +4,23 @@ App = {
   web3Provider: null,
   contracts: {},
 
-  	//Need to write this one :P
-  	init: function() {
-  		return App.initWeb3();
-  	},
-
-
-  	//Gives a web3 instance 
-	initWeb3: function() {
-    	// Is there an injected web3 instance?
-    	if (typeof web3 !== 'undefined') {
-      		App.web3Provider = web3.currentProvider;
-      	} else {
-      	// If no injected web3 instance is detected, fall back to Ganache
-		App.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
-		}
-		web3 = new Web3(App.web3Provider);
-
-		return App.initContract();
+	//Need to write this one :P
+	init: function() {
+		return App.initWeb3();
 	},
+
+  //Gives a web3 instance 
+  initWeb3: function() {
+  // Is there an injected web3 instance?
+    if (typeof web3 !== 'undefined') {
+      App.web3Provider = web3.currentProvider;
+    } else {
+    // If no injected web3 instance is detected, fall back to Ganache
+      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
+    }
+    web3 = new Web3(App.web3Provider);
+    return App.initContract();
+  },
 
 	//Initializes the contract
 	initContract: function() {
@@ -66,7 +64,8 @@ App = {
 
   },
 
-	//Submits the hash of the tender application in the smart contract
+
+  //Matches the hash of the uploaded file with the stored hashes
 	handleTenderHashCheck: function(event) {
     event.preventDefault();
 
@@ -102,35 +101,37 @@ App = {
 
     },
 
+
+    //Submits the hash of the tender application in the smart contract
     handleTenderReq :function (event) {
-      event.preventDefault();
-      
-      var hashval =  $('#fileHash').val();
-      var tenderval =  $('#tenderHash').val();
-      var GST =  $('#GST').val();
-      var curFileHash = $('#curFileHash').val();
+    event.preventDefault();
+    
+    var hashval =  $('#fileHash').val();
+    var tenderval =  $('#tenderHash').val();
+    var GST =  $('#GST').val();
+    var curFileHash = $('#curFileHash').val();
 
-      var tenderInstance;
+    var tenderInstance;
 
-       web3.eth.getAccounts(function(error, accounts) {
-          if (error) {
-            console.log(error);
-          }
+     web3.eth.getAccounts(function(error, accounts) {
+        if (error) {
+          console.log(error);
+        }
 
-          var account = accounts[0];
+        var account = accounts[0];
 
-          App.contracts.Tenderwize.deployed().then(function(instance) {
-             tenderInstance = instance;
-             return tenderInstance.mapClient(tenderval, GST, hashval, {from: account});
-          }).then(function(result) {
-             console.log(result);
-             return ;
-          }).catch(function(err) {
-             console.log(err.message);
-          });
-
+        App.contracts.Tenderwize.deployed().then(function(instance) {
+           tenderInstance = instance;
+           return tenderInstance.mapClient(tenderval, GST, hashval, {from: account});
+        }).then(function(result) {
+           console.log(result);
+           return ;
+        }).catch(function(err) {
+           console.log(err.message);
         });
-    }
+
+      });
+  }
 };
 
 $(function() {
