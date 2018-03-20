@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const multer  = require('multer');
-const SHA3 = require('sha3');
 const port = process.env.PORT || 3000;
 
 var tender_complete = {
@@ -113,18 +112,18 @@ router.post('/new_tender', function(req, res) {
 	var dt = new Date();
 
 	var tender = {
-		id: req.body.title,
+		id: dt.toDateString(),
 		title: req.body.title,
 		desc: req.body.desc,
 		link: req.body.link,
-		link_hash: req.body.link_hash;
+		file_hash: req.body.file_hash,
 		addr: null,
 		date: dt.toDateString(),
 		dead1: req.body.dead1,
 		dead2: req.body.dead2
 	}
 
-	tender_complete[req.body.org] = tender;
+	tender_complete[req.body.org].append(tender);
 });
 
 router.get('/get_tenders', function(req, res){
