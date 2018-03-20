@@ -43,11 +43,33 @@ App = {
 		//find events;
     $(document).on('click', '#submitTender', App.handleTenderReq);
     $(document).on('click', '#submitHashOfFile', App.handleTenderHashCheck);
+    $(document).on('change', '#input-file', App.getClientSideHash);
 	},
+
+
+  //Generates hash of file on the client side
+  getClientSideHash: function(event){
+
+    var hash;    
+    var input = event.target;        
+    var reader = new FileReader();
+
+    reader.onload = function() {
+      var data = reader.result;
+      hash = web3.sha3(data);
+      console.log(hash);
+      var t = document.getElementById("fileHash");         
+      t.value = hash;
+    }
+
+    reader.readAsText(input.files[0]);
+
+  },
 
 	//Submits the hash of the tender application in the smart contract
 	handleTenderHashCheck: function(event) {
     event.preventDefault();
+
     var hashval =  $('#fileHash').val();
     var tenderval =  $('#tenderHash').val();
     var GST =  $('#GST').val();
@@ -70,13 +92,14 @@ App = {
            //console.log(tenderInstance);
            return tenderInstance.matchFileHash(tenderval, GST, curFileHash, {from :account});
         }).then(function(result) {
-           console.log(result);
+           console.log(result.toNumber());
            console.log("success");
         }).catch(function(err) {
            console.log("Shit happened");
            console.log(err.message);
         });
       });
+
     },
 
     handleTenderReq :function (event) {
