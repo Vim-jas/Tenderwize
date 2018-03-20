@@ -45,13 +45,69 @@ App = {
 	},
 
 	//Submits the hash of the tender application in the smart contract
-	handleSubmitHash: function() {
-		console.log("Success");
+	handleSubmitHash: function(event) {
     event.preventDefault();
-    
-	},
+    var hashval =  $('#fileHash').val();
+    var tenderval =  $('#tenderHash').val();
+    var GST =  $('#GST').val();
 
+    var tenderInstance;
 
+     web3.eth.getAccounts(function(error, accounts) {
+        if (error) {
+          console.log(error);
+        }
+
+        var account = accounts[0];
+
+        App.contracts.Tenderwize.deployed().then(function(instance) {
+           tenderInstance = instance;
+           return tenderInstance.mapClient(tenderval, GST, hashval, {from: account});
+        }).then(function(result) {
+          console.log(result);
+           console.log("success");
+           return ;
+        }).catch(function(err) {
+           console.log(err.message);
+        });
+
+      });
+    },
+
+    handleTenderHashCheck :function (event) {
+      event.preventDefault();
+      
+      var hashval =  $('#fileHash').val();
+      var tenderval =  $('#tenderHash').val();
+      var GST =  $('#GST').val();
+      var curFileHash = $('#curFileHash').val();
+
+      var tenderInstance;
+
+       web3.eth.getAccounts(function(error, accounts) {
+          if (error) {
+            console.log(error);
+          }
+
+          var account = accounts[0];
+
+          App.contracts.Tenderwize.deployed().then(function(instance) {
+             tenderInstance = instance;
+             return tenderInstance.matchFileHash(tenderval, GST, curFileHash, {from: account});
+          }).then(function(result) {
+             console.log(result);
+             if (result == true)
+              console.log("FUCK YES!");
+             else 
+              console.log("FUCK NO!");
+
+             return ;
+          }).catch(function(err) {
+             console.log(err.message);
+          });
+
+        });
+    }
 };
 
 $(function() {

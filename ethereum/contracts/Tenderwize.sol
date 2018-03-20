@@ -22,9 +22,9 @@ contract Tenderwize {
 	}
 
 	//Maps the Tender Application's hash with his/her GSTID for the given Tender.
-	function mapClient(bytes hashTender, bytes GSTID, bytes hash) public returns (bool) {
+	function mapClient(bytes hashTender, bytes GSTID, bytes hash) public returns (uint) {
 		if (!check(hashTender, GSTID)) {
-			return false;
+			return 101;
 		}
 		
 		uint c = arrTender[cnt].count;
@@ -38,7 +38,7 @@ contract Tenderwize {
 			cnt += 1;
 		}
 
-		return true;
+		return cnt;
 	}
 
 
