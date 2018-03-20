@@ -1,0 +1,34 @@
+{
+  "name": "tenderwize-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/react-router-dom": "^4.2.5",
+    "@types/webfontloader": "^1.6.29",
+    "axios": "^0.18.0",
+    "material-ui": "^1.0.0-beta.38",
+    "material-ui-pickers": "^1.0.0-rc.3",
+    "moment": "^2.21.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-file-picker": "^0.0.5",
+    "react-font-face": "^0.2.1",
+    "react-router-dom": "^4.2.2",
+    "react-scripts-ts": "2.14.0",
+    "styled-components": "^3.2.3",
+    "webfontloader": "^1.6.28"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.0",
+    "@types/node": "^9.4.7",
+    "@types/react": "^16.0.40",
+    "@types/react-dom": "^16.0.4",
+    "typescript": "^2.7.2"
+  }
+}
