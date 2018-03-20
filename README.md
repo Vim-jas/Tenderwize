@@ -1,6 +1,6 @@
 # TenderWize
 
-![Logo](/images/logo.png)
+![](logo.png)
 
 TenderWize is a smart-contract based decentralized application which allows different organisations to release tenders 
 for procurement of any kind of goods or services. TenderWize prevents organisations from tampering or looking into the 
