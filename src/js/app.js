@@ -41,39 +41,45 @@ App = {
 	//Binds the event of click of the button with appropriate function.
 	bindEvents: function() {
 		//find events;
-    $(document).on('click', '#submitHash', App.handleSubmitHash);
+    $(document).on('click', '#submitTender', App.handleTenderReq);
+    $(document).on('click', '#submitHashOfFile', App.handleTenderHashCheck);
 	},
 
 	//Submits the hash of the tender application in the smart contract
-	handleSubmitHash: function(event) {
+	handleTenderHashCheck: function(event) {
     event.preventDefault();
     var hashval =  $('#fileHash').val();
     var tenderval =  $('#tenderHash').val();
     var GST =  $('#GST').val();
+    var curFileHash = $('#curFileHash').val();
+
+    console.log(hashval);
+    console.log(tenderval);
+    console.log(GST);
+    console.log(curFileHash);
 
     var tenderInstance;
 
-     web3.eth.getAccounts(function(error, accounts) {
-        if (error) {
-          console.log(error);
-        }
-
-        var account = accounts[0];
-
+      web3.eth.getAccounts(function(error, accounts) {
+          if (error) {
+            console.log(error);
+          }
+          var account = accounts[0];
         App.contracts.Tenderwize.deployed().then(function(instance) {
            tenderInstance = instance;
-           return tenderInstance.getHashOfTender.call();
+           //console.log(tenderInstance);
+           return tenderInstance.matchFileHash(tenderval, GST, curFileHash, {from :account});
         }).then(function(result) {
            console.log(result);
            console.log("success");
         }).catch(function(err) {
+           console.log("Shit happened");
            console.log(err.message);
         });
-
       });
     },
 
-    handleTenderHashCheck :function (event) {
+    handleTenderReq :function (event) {
       event.preventDefault();
       
       var hashval =  $('#fileHash').val();
@@ -92,14 +98,9 @@ App = {
 
           App.contracts.Tenderwize.deployed().then(function(instance) {
              tenderInstance = instance;
-             return tenderInstance.matchFileHash(tenderval, GST, curFileHash, {from: account});
+             return tenderInstance.mapClient(tenderval, GST, hashval, {from: account});
           }).then(function(result) {
              console.log(result);
-             if (result == true)
-              console.log("FUCK YES!");
-             else 
-              console.log("FUCK NO!");
-
              return ;
           }).catch(function(err) {
              console.log(err.message);
