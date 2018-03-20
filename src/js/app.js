@@ -62,11 +62,10 @@ App = {
 
         App.contracts.Tenderwize.deployed().then(function(instance) {
            tenderInstance = instance;
-           return tenderInstance.mapClient(tenderval, GST, hashval, {from: account});
+           return tenderInstance.getHashOfTender.call();
         }).then(function(result) {
-          console.log(result);
+           console.log(result);
            console.log("success");
-           return ;
         }).catch(function(err) {
            console.log(err.message);
         });

@@ -4,10 +4,10 @@ contract Tenderwize {
 	
 	struct Tender
     {
-    	bytes hashOfTender;
+    	string hashOfTender;
     	uint count;
-		bytes [50] GSTIDArr;
-		bytes [50] hashArr;
+		string [50] GSTIDArr;
+		string [50] hashArr;
     }
 
 	uint cnt;
@@ -22,9 +22,9 @@ contract Tenderwize {
 	}
 
 	//Maps the Tender Application's hash with his/her GSTID for the given Tender.
-	function mapClient(bytes hashTender, bytes GSTID, bytes hash) public returns (uint) {
+	function mapClient(string hashTender, string GSTID, string hash) public returns (bool) {
 		if (!check(hashTender, GSTID)) {
-			return 101;
+			return false;
 		}
 		
 		uint c = arrTender[cnt].count;
@@ -38,12 +38,12 @@ contract Tenderwize {
 			cnt += 1;
 		}
 
-		return cnt;
+		return true;
 	}
 
 
 	//Checks whether the application of a certain user for a specific tender already exists or not
-	function check (bytes hashTender, bytes GSTID) private view returns (bool) {
+	function check (string hashTender, string GSTID) private view returns (bool) {
 		for (uint i = 0; i < cnt; i++) {
 			if (keccak256(arrTender[i].hashOfTender) == keccak256(hashTender)) {
 				for (uint j = 0; j < arrTender[i].count; j++) {
@@ -58,7 +58,7 @@ contract Tenderwize {
 
 
 	//Matches the hash of the file submiited with the stored hashes.
-	function matchFileHash (bytes hashTender, bytes GSTID, bytes givenHash) public view returns (bool) {
+	function matchFileHash (string hashTender, string GSTID, string givenHash) public view returns (bool) {
 		for (uint i = 0; i < cnt; i++) {
 			if (keccak256(arrTender[i].hashOfTender) == keccak256(hashTender)) {
 				
@@ -79,4 +79,16 @@ contract Tenderwize {
 		}
 		return false;
 	}
+
+	// function getGSTID () public view returns(string[50]) {
+	// 	return arrTender[cnt].GSTIDArr;
+	// }
+
+	// function getHashArr () public view returns(string[50]) {
+	// 	return arrTender[cnt].hashArr;
+	// }
+
+	// function getHashOfTender () public constant returns(string) {
+	// 	return string(cnt);
+	// }	
 }
