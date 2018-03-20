@@ -101,6 +101,15 @@ App = {
 
     },
 
+    getHashFromId: function(id) {
+      $.get('http://localhost:3000/get_tenders?id=' + id).done(
+        function(data) {
+          var res = parseJson(data);
+          return res[file_hash];
+        }
+      );
+    },
+
 
     //Submits the hash of the tender application in the smart contract
     handleTenderReq :function (event) {
