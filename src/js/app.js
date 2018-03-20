@@ -5,7 +5,7 @@ App = {
   contracts: {},
 
   	//Need to write this one :P
-  	init: function{
+  	init: function() {
   		return App.initWeb3();
   	},
 
@@ -45,8 +45,10 @@ App = {
 	},
 
 	//Submits the hash of the tender application in the smart contract
-	submitHashOfFile: function{
-		
+	handleSubmitHash: function() {
+		console.log("Success");
+    event.preventDefault();
+    
 	},
 
 
